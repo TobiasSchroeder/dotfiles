@@ -7,11 +7,9 @@ if [ -d ${HOME}/.local/bin ] ; then
     export PATH="${HOME}/.local/bin:$PATH"
 fi
 
-# set EDITOR to the best editor we can find on the system
-preferred_editors="emacs"
-# gedit will suffice if we have a graphical display
+# gedit is best if we have a graphical display
 [ ! -z $DISPLAY ] && preferred_editors="${preferred_editors} gedit"
-preferred_editors="${preferred_editors} nano pico vim vi"
+preferred_editors="${preferred_editors} nano pico vim vi emacs"
 
 # TODO Preferred editor for OS X? subl?
 #if [[ ! "$SSH_TTY" && "$OSTYPE" =~ ^darwin ]]; then
@@ -20,10 +18,8 @@ preferred_editors="${preferred_editors} nano pico vim vi"
 export EDITOR=$(type ${preferred_editors} 2>/dev/null | sed 's/ .*$//;q')
 export VISUAL="$EDITOR"
 
-# Use the ~/.forward address for MAILTO
+# Use the ~/.forward address for MAILTO and EMAIL
 if [ -r ~/.forward ]; then
     export MAILTO=`cat ~/.forward`
-else
-    export MAILTO=taylor.braun-jones@ge.com
+    export EMAIL=$MAILTO
 fi
-export EMAIL=$MAILTO
